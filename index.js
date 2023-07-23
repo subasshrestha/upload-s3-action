@@ -23,19 +23,20 @@ const DESTINATION_DIR = core.getInput('destination_dir', {
   required: false,
 });
 const ENDPOINT = core.getInput('endpoint', {
-  required: false,
+  required: true,
+});
+const REGION = core.getInput('region', {
+  required: true,
 });
 
-const s3options = {
-  accessKeyId: AWS_KEY_ID,
-  secretAccessKey: SECRET_ACCESS_KEY,
-};
-
-if (ENDPOINT) {
-  s3options.endpoint = ENDPOINT;
-}
-
-const s3 = new S3(s3options);
+const s3 = new S3({
+  endpoint: ENDPOINT,
+  region: REGION || 'us-east-1',
+  credentials: {
+    accessKeyId: AWS_KEY_ID,
+    secretAccessKey: SECRET_ACCESS_KEY,
+  }
+});
 const destinationDir = DESTINATION_DIR === '/' ? shortid() : DESTINATION_DIR;
 const paths = klawSync(SOURCE_DIR, {
   nodir: true,
