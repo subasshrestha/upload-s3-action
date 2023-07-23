@@ -23,10 +23,10 @@ const DESTINATION_DIR = core.getInput('destination_dir', {
   required: false,
 });
 const ENDPOINT = core.getInput('endpoint', {
-  required: true,
+  required: false,
 });
 const REGION = core.getInput('region', {
-  required: true,
+  required: false,
 });
 
 const s3 = new S3({
